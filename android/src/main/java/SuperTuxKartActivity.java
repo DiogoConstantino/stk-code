@@ -217,6 +217,8 @@ public class SuperTuxKartActivity extends NativeActivity
     {
         int key_code = event.getKeyCode();
         int action = event.getAction();
+        int scan_code = event.getScanCode();
+        int repeat_count = event.getRepeatCount();
         int device_id = event.getDeviceId();
         int source = event.getSource();
 
@@ -232,19 +234,19 @@ public class SuperTuxKartActivity extends NativeActivity
             // Note that we process events with specific key codes here
             if (action == KeyEvent.ACTION_DOWN)
             {
-                if (SDLControllerManager.onNativePadDown(device_id, key_code) == 0)
+                if (SDLControllerManager.onNativePadDown(
+                    device_id, key_code, scan_code, repeat_count) == 0)
                     return true;
             }
             else if (action == KeyEvent.ACTION_UP)
             {
-                if (SDLControllerManager.onNativePadUp(device_id, key_code) == 0)
+                if (SDLControllerManager.onNativePadUp(
+                    device_id, key_code, scan_code) == 0)
                     return true;
             }
         }
 
-        int repeat_count = event.getRepeatCount();
         int meta_state = event.getMetaState();
-        int scan_code = event.getScanCode();
         // User pressed back button
         if (key_code == KeyEvent.KEYCODE_BACK &&
             action == KeyEvent.ACTION_DOWN)
